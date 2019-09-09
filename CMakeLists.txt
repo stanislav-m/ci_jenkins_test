@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.8)
+
+project(test_h)
+set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "_TARGETS")
+set(CMAKE_CXX_STANDARD 14)
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "No build type selected, default to Debug")
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
+endif()
+
+string(TOUPPER "${CMAKE_BUILD_TYPE}" uppercase_CMAKE_BUILD_TYPE)
+if (CMAKE_BUILD_TYPE AND NOT uppercase_CMAKE_BUILD_TYPE MATCHES "^(DEBUG|RELEASE)$")
+  message(FATAL_ERROR "Invalid value for CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+endif()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+add_subdirectory(cpp)
+
